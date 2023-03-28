@@ -157,7 +157,7 @@ server <- function(input, output, session) {
         output$value1 <- renderText({paste0("税前总收入：￥", vals[1])})
         output$value2 <- renderText({paste0("总抵扣额：￥", vals[2], " (含免税额￥", BASE_DEDUCT, ")")})
         output$value3 <- renderText({paste0("应纳税所得额（纳税基数）：￥", vals[3])})
-        output$value4 <- renderText({paste0("应纳税额：￥", vals[4], ifelse(vals[6] == METHOD[1], paste0(" (奖金扣税", BONUS_RATE * 100, "%)"), ""))})
+        output$value4 <- renderText({paste0("应纳税额：￥", vals[4], ifelse(vals[6] == METHOD[1], paste0(" (含奖金扣税", BONUS_RATE * 100, "%)"), ""))})
         output$value5 <- renderText({paste0("税后总收入（扣除三险一金）：￥", vals[5])})
       }
     }
