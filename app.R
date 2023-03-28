@@ -11,7 +11,7 @@ library(shiny)
 library(shinyWidgets)
 
 
-# turn of scientific notation
+# turn off scientific notation
 options(scipen=999)
 
 # global params
@@ -99,7 +99,7 @@ input_chk <- function(income, bonus, benefit, deduct) {
 ui <- fluidPage(
 
     # Application title
-    titlePanel("税收计算器"),
+    titlePanel("税收计算器 - 打工人简易版"),
     prettyRadioButtons(
       inputId = "method",
       label = h3("计税方式"), 
@@ -109,8 +109,8 @@ ui <- fluidPage(
     ),
     textInput("income", label = h3("年度薪资总收入"), value = ""),
     textInput("bonus", label = h3("年度奖金总收入"), value = ""),
-    textInput("benefit", label = h3("年度三险一金总金额 (个人)"), value = ""),
-    textInput("deduct", label = h3("专项抵扣金额"), value = ""),
+    textInput("benefit", label = h3("年度三险一金总金额 (个人部分)"), value = ""),
+    textInput("deduct", label = h3("专项附加扣除金额"), value = ""),
     actionBttn(
       inputId = "submit",
       label = "计算",
@@ -124,8 +124,11 @@ ui <- fluidPage(
       color = "danger"
     ),
     hr(),
-    h5("注 1：金额内只可填写数字或仅含数字和数学符号的式子，例如：60000 或 5000 * 12 或 5000 + 5000 + 5000，以此类推。"),
-    h5("注 2：若无此金额，请填写为0。"),
+    h5("注 1：本工具计税方法依据年度个人所得税累进税率，与官方的个人所得税APP采取同等方法。"),
+    h5("注 2：金额内只可填写数字或仅含数字和数学符号的式子，例如：60000 或 5000 * 12 或 5000 + 5000 + 5000，以此类推。"),
+    h5("注 3：若无此金额，请填写为0。"),
+    tags$a(href="https://www.fadada.com/notice/detail-16666.html", h5("注 4：梯度扣税及专项附加扣除金额解释。")),
+    tags$a(href="https://github.com/Cosmopolitan-Ou/TaxCal/blob/main/app.R", h5("注 5：源代码。")),
     hr(),
     h3(textOutput("rel")),
     h4(textOutput("value1")),
