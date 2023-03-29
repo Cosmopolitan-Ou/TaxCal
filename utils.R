@@ -84,5 +84,3 @@ input_chk <- function(income, bonus, benefit, deduct) {
   if (is.null(cal(deduct))) null_vars <- append(null_vars, "专项附加扣除金额")
   return(paste(null_vars, collapse = ", "))
 }
-
-
