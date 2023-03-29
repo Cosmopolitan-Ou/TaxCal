@@ -90,14 +90,14 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
     }
   }
   tax_range <- append(tax_range[1:length(tax)], paste0("奖金部分 (", BONUS_RATE * 100, "%)"))
-  tax_cumsum <- cumsum(tax) 
   tax_txt <- c()
   for(i in tax) {
     tax_txt <- append(tax_txt, paste0("￥", i))
   }
   tax_txt <- append(tax_txt, paste0("￥", bonus_tax))
-  tax_cumsum_bonus <- append(tax_cumsum, bonus_tax)
-  df_tax <- data.frame(tax_class, tax_cumsum_bonus, tax_txt)
+  # tax_cumsum_bonus <- append(tax_cumsum, bonus_tax)
+  tax_ladder_bonus <- append(tax, bonus_tax)
+  df_tax <- data.frame(tax_class, tax_ladder_bonus, tax_txt)
   df_tax[["tax_range"]] <- factor(tax_range, levels = tax_range)
   
   tax_sum <- c(paste0("奖金税额：￥", bonus_tax), paste0("梯度税额：￥", sum(tax)))
@@ -108,7 +108,7 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
 # function to plot tax details
 tax_plt <- function(df_tax, tax_sum) {
   showtext_auto()
-  plt <- ggplot(df_tax, aes(fill=tax_range, y=tax_cumsum_bonus, x=tax_class, label=tax_txt)) + 
+  plt <- ggplot(df_tax, aes(fill=tax_range, y=tax_ladder_bonus, x=tax_class, label=tax_txt)) + 
     geom_bar(position="stack", stat="identity") +
     geom_text(size = 3, position = position_stack(vjust = 0.5)) +
     theme(axis.title.x=element_blank(),
