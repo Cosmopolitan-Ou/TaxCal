@@ -1,5 +1,3 @@
-library(shiny)
-library(shinyWidgets)
 
 # UI for application
 ui <- fluidPage(
@@ -13,10 +11,10 @@ ui <- fluidPage(
     icon = icon("user"), 
     animation = "tada"
   ),
-  textInput("income", label = h3("年度薪资总收入"), value = ""),
-  textInput("bonus", label = h3("年度奖金总收入"), value = ""),
-  textInput("benefit", label = h3("年度三险一金总金额 (个人部分)"), value = ""),
-  textInput("deduct", label = h3("专项附加扣除金额"), value = ""),
+  textInput("income", label = h3("年度薪资总收入 (元) "), value = ""),
+  textInput("bonus", label = h3("年度奖金总收入 (元)"), value = ""),
+  textInput("benefit", label = h3("年度三险一金总金额 - 个人部分 (元)"), value = ""),
+  textInput("deduct", label = h3("专项附加扣除金额 (元)"), value = ""),
   actionBttn(
     inputId = "submit",
     label = "计算",
@@ -42,5 +40,10 @@ ui <- fluidPage(
   h4(textOutput("value3")),
   h4(textOutput("value4")),
   h4(textOutput("value5")),
-  hr()
+  hr(),
+  h3(textOutput("tax_title")),
+  plotOutput("tax_plot"),
+  hr(),
+  h5(textOutput("tax_details1")),
+  h5(textOutput("tax_details2"))
 )

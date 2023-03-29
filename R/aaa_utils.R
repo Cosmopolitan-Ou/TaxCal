@@ -1,3 +1,7 @@
+library(shiny)
+library(shinyWidgets)
+library(ggplot2)
+
 
 # turn off scientific notation
 options(scipen=999)
@@ -49,29 +53,72 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
   }
   
   if (pre_amout <= 0) {
-    tax <- 0
+    tax <- c(0)
   } else {
     resid <- c()
     for (i in TAX_RANGE) {
       resid <- append(resid, pre_amout - i)
     }
-    tax <- 0
+    tax <- c()
     for (i in seq_along(resid)) {
-      tax <- tax + ifelse(resid[i] > 0, (TAX_RANGE[i] -  ifelse(i==1, 0, TAX_RANGE[i-1])) * (TAX_RATE[i]), 0)
+      tax <- append(tax, ifelse(resid[i] > 0, (TAX_RANGE[i] -  ifelse(i==1, 0, TAX_RANGE[i-1])) * (TAX_RATE[i]), 0))
       if (resid[i] < 0) break
     }
-    tax <- tax + (pre_amout - ifelse(i == 1, 0, TAX_RANGE[i - 1])) * TAX_RATE[i]
+    tax <- append(tax[1:length(tax)-1], (pre_amout - ifelse(i == 1, 0, TAX_RANGE[i - 1])) * TAX_RATE[i])
   }
   
-  tax <- tax + bonus_tax
+  tax_total <- sum(tax) + bonus_tax
   #############################################################################
   
+  # get summary numbers
   val3 <- ifelse(pre_amout < 0, 0, pre_amout)
-  val4 <- tax
-  val5 <- val1 - benefit - tax
+  val4 <- tax_total
+  val5 <- val1 - benefit - tax_total
   val6 <- method
   
-  return(list(val1, val2, val3, val4, val5, val6))
+  # get tax details
+  tax_class <- append(rep(paste("累计纳税基数：￥", val3), length(tax)), paste0("奖金纳税基数：￥", bonus))
+  tax_range <- c()
+  for (i in seq_along(TAX_RANGE)) {
+    if (i == 1) {
+      tax_range <- append(tax_range, paste0("0 ~ ", TAX_RANGE[i] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%)"))
+    } else if(i != length(TAX_RANGE)){
+      tax_range <- append(tax_range, paste0(TAX_RANGE[i-1] / 10000, " ~ ", TAX_RANGE[i] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%)"))
+    } else {
+      tax_range <- append(tax_range, paste0("> ", TAX_RANGE[i - 1] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%)"))
+    }
+  }
+  tax_range <- append(tax_range[1:length(tax)], paste0("奖金部分 (", BONUS_RATE * 100, "%)"))
+  tax_cumsum <- cumsum(tax) 
+  tax_txt <- c()
+  for(i in tax) {
+    tax_txt <- append(tax_txt, paste0("￥", i))
+  }
+  tax_txt <- append(tax_txt, paste0("￥", bonus_tax))
+  tax_cumsum_bonus <- append(tax_cumsum, bonus_tax)
+  df_tax <- data.frame(tax_class, tax_cumsum_bonus, tax_txt)
+  df_tax[["tax_range"]] <- factor(tax_range, levels = rev(tax_range))
+  
+  tax_sum <- c(paste0("奖金税额：￥", bonus_tax), paste0("梯度税额：￥", sum(tax)))
+  
+  return(list(val1, val2, val3, val4, val5, val6, df_tax, tax_sum))
+}
+
+# function to plot tax details
+tax_plt <- function(df_tax, tax_sum) {
+  plt <- ggplot(df_tax, aes(fill=tax_range, y=tax_cumsum_bonus, x=tax_class, label=tax_txt)) + 
+    geom_bar(position="stack", stat="identity") +
+    geom_text(size = 3, position = position_stack(vjust = 0.5)) +
+    theme(axis.title.x=element_blank(),
+          axis.ticks.x=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank(),
+          axis.title.y=element_text(angle = 0, vjust = 0.5),
+          panel.grid.major = element_blank()) +
+    ylab("扣税额") +
+    annotate("text",x=1:2,y=Inf,vjust=1.5,label=tax_sum) +
+    labs(fill="扣税占比")
+  return(plt)
 }
 
 

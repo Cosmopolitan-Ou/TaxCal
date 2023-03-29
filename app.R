@@ -1,5 +1,3 @@
-library(shiny)
-library(shinyWidgets)
 
 # source R files
 for (file in list.files(file.path(getwd(), 'R'))) {
