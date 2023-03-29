@@ -1,6 +1,7 @@
 library(shiny)
 library(shinyWidgets)
 library(ggplot2)
+library(showtext)
 
 
 # turn off scientific notation
@@ -106,6 +107,7 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
 
 # function to plot tax details
 tax_plt <- function(df_tax, tax_sum) {
+  showtext_auto()
   plt <- ggplot(df_tax, aes(fill=tax_range, y=tax_cumsum_bonus, x=tax_class, label=tax_txt)) + 
     geom_bar(position="stack", stat="identity") +
     geom_text(size = 3, position = position_stack(vjust = 0.5)) +
