@@ -89,8 +89,8 @@ input_chk <- function(income, bonus, benefit, deduct) {
   null_vars <- c()
   if (is.null(cal(income))) null_vars <- append(null_vars, "年度薪资总收入")
   if (is.null(cal(bonus))) null_vars <- append(null_vars, "年度奖金总收入")
-  if (is.null(cal(benefit))) null_vars <- append(null_vars, "年度三险一金总金额")
-  if (is.null(cal(deduct))) null_vars <- append(null_vars, "专项抵扣金额")
+  if (is.null(cal(benefit))) null_vars <- append(null_vars, "年度三险一金总金额 (个人部分)")
+  if (is.null(cal(deduct))) null_vars <- append(null_vars, "专项附加扣除金额")
   return(paste(null_vars, collapse = ", "))
 }
 
