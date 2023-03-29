@@ -78,7 +78,7 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
   val6 <- method
   
   # get tax details
-  tax_class <- append(rep(paste("累计基数：￥", val3), length(tax)), paste0("奖金基数：￥", bonus))
+  tax_class <- append(rep(paste("累计基数：￥", val3), length(tax)), paste0("奖金基数：￥", bonus_tax / BONUS_RATE))
   tax_range <- c()
   for (i in seq_along(TAX_RANGE)) {
     if (i == 1) {
