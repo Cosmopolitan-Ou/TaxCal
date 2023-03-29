@@ -116,7 +116,8 @@ tax_plt <- function(df_tax, tax_sum) {
           axis.text.y=element_blank(),
           axis.ticks.y=element_blank(),
           axis.title.y=element_text(angle = 0, vjust = 0.5),
-          panel.grid.major = element_blank()) +
+          panel.grid.major = element_blank(),
+          legend.position = "top") +
     ylab("扣税额") +
     annotate("text",x=1:2,y=Inf,vjust=1.5,label=tax_sum) +
     labs(fill="扣税占比")
