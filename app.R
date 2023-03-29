@@ -1,7 +1,5 @@
-
 library(shiny)
 library(shinyWidgets)
-
 
 # source R files
 source(file.path(getwd(), 'utils.R'), encoding="utf-8")
