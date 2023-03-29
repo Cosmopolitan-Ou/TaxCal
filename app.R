@@ -14,7 +14,7 @@ library(shinyWidgets)
 # turn off scientific notation
 options(scipen=999)
 
-# global params
+# global parameters
 METHOD = c("单独计税（奖金按3%税率计税，薪资按梯度计税）", "全部并入综合所得计税 (薪资加奖金按梯度计税)")
 BASE_DEDUCT = 60000
 TAX_RANGE = c(36000, 144000, 300000, 420000, 660000, 960000, Inf)
@@ -84,7 +84,7 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
 
 
 
-# function to check input params
+# function to check input parameters
 input_chk <- function(income, bonus, benefit, deduct) {
   null_vars <- c()
   if (is.null(cal(income))) null_vars <- append(null_vars, "年度薪资总收入")
@@ -95,7 +95,7 @@ input_chk <- function(income, bonus, benefit, deduct) {
 }
 
 
-# Define UI for application that draws a histogram
+# UI for application
 ui <- fluidPage(
 
     # Application title
@@ -139,7 +139,7 @@ ui <- fluidPage(
     hr()
 )
 
-# Define server logic required to draw a histogram
+# server logic
 server <- function(input, output, session) {
   
   # submit button
@@ -180,5 +180,5 @@ server <- function(input, output, session) {
   
 }
 
-# Run the application 
+# run the application 
 shinyApp(ui = ui, server = server)
