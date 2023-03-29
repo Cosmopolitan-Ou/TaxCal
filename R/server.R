@@ -20,8 +20,8 @@ server <- function(input, output, session) {
         output$value4 <- renderText({paste0("应纳税额：￥", vals[[4]], ifelse(vals[[6]] == METHOD[1], paste0(" (含奖金扣税", BONUS_RATE * 100, "%)"), ""))})
         output$value5 <- renderText({paste0("税后总收入（扣除三险一金）：￥", vals[[5]])})
         output$tax_title <- renderText({"扣税明细："})
-        output$tax_details1 <- renderText({"注 1：若扣税方式为单独计税，则奖金纳税基数为：年度奖金总收入。累计纳税基数为：年度薪资总收入 - ￥60000 - 年度三险一金总金额 (个人部分) - 专项附加扣除金额"})
-        output$tax_details2 <- renderText({"注 2：若扣税方式为合并计税，则奖金纳税基数为：￥0。累计纳税基数为：年度奖金总收入 + 年度薪资总收入 - ￥60000 - 年度三险一金总金额 (个人部分) - 专项附加扣除金额"})
+        output$tax_details1 <- renderText({"注 1：若扣税方式为单独计税，则奖金基数为：年度奖金总收入。累计基数为：年度薪资总收入 - ￥60000 - 年度三险一金总金额 (个人部分) - 专项附加扣除金额"})
+        output$tax_details2 <- renderText({"注 2：若扣税方式为合并计税，则奖金基数为：￥0。累计基数为：年度奖金总收入 + 年度薪资总收入 - ￥60000 - 年度三险一金总金额 (个人部分) - 专项附加扣除金额"})
         output$tax_plot <- renderPlot({tax_plt(vals[[7]], vals[[8]])})
       }
     }

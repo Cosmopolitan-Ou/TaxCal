@@ -78,7 +78,7 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
   val6 <- method
   
   # get tax details
-  tax_class <- append(rep(paste("累计纳税基数：￥", val3), length(tax)), paste0("奖金纳税基数：￥", bonus))
+  tax_class <- append(rep(paste("累计基数：￥", val3), length(tax)), paste0("奖金基数：￥", bonus))
   tax_range <- c()
   for (i in seq_along(TAX_RANGE)) {
     if (i == 1) {
@@ -89,7 +89,7 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
       tax_range <- append(tax_range, paste0("> ", TAX_RANGE[i - 1] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%)"))
     }
   }
-  tax_range <- append(tax_range[1:length(tax)], paste0("奖金部分 (", BONUS_RATE * 100, "%)"))
+  tax_range <- append(tax_range[1:length(tax)], paste0("奖金部分 (税率：", BONUS_RATE * 100, "%)"))
   tax_cumsum <- cumsum(tax) 
   tax_txt <- c()
   for(i in tax) {
