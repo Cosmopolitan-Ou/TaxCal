@@ -82,14 +82,14 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
   tax_range <- c()
   for (i in seq_along(TAX_RANGE)) {
     if (i == 1) {
-      tax_range <- append(tax_range, paste0("0 ~ ", TAX_RANGE[i] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%) "))
+      tax_range <- append(tax_range, paste0("0 ~ ", TAX_RANGE[i] / 10000, " 万 (", TAX_RATE[i] * 100, "%)"))
     } else if(i != length(TAX_RANGE)){
-      tax_range <- append(tax_range, paste0(TAX_RANGE[i-1] / 10000, " ~ ", TAX_RANGE[i] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%) "))
+      tax_range <- append(tax_range, paste0(TAX_RANGE[i-1] / 10000, " ~ ", TAX_RANGE[i] / 10000, " 万 (", TAX_RATE[i] * 100, "%)"))
     } else {
-      tax_range <- append(tax_range, paste0("> ", TAX_RANGE[i - 1] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%) "))
+      tax_range <- append(tax_range, paste0("> ", TAX_RANGE[i - 1] / 10000, " 万 (", TAX_RATE[i] * 100, "%)"))
     }
   }
-  tax_range <- append(tax_range[1:length(tax)], paste0("奖金部分 (税率：", BONUS_RATE * 100, "%) "))
+  tax_range <- append(tax_range[1:length(tax)], paste0("奖金部分 (", BONUS_RATE * 100, "%)"))
   tax_cumsum <- cumsum(tax) 
   tax_txt <- c()
   for(i in tax) {
