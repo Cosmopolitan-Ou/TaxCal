@@ -82,14 +82,14 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
   tax_range <- c()
   for (i in seq_along(TAX_RANGE)) {
     if (i == 1) {
-      tax_range <- append(tax_range, paste0("0 ~ ", TAX_RANGE[i] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%)"))
+      tax_range <- append(tax_range, paste0("0 ~ ", TAX_RANGE[i] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%) "))
     } else if(i != length(TAX_RANGE)){
-      tax_range <- append(tax_range, paste0(TAX_RANGE[i-1] / 10000, " ~ ", TAX_RANGE[i] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%)"))
+      tax_range <- append(tax_range, paste0(TAX_RANGE[i-1] / 10000, " ~ ", TAX_RANGE[i] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%) "))
     } else {
-      tax_range <- append(tax_range, paste0("> ", TAX_RANGE[i - 1] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%)"))
+      tax_range <- append(tax_range, paste0("> ", TAX_RANGE[i - 1] / 10000, " 万 (税率：", TAX_RATE[i] * 100, "%) "))
     }
   }
-  tax_range <- append(tax_range[1:length(tax)], paste0("奖金部分 (税率：", BONUS_RATE * 100, "%)"))
+  tax_range <- append(tax_range[1:length(tax)], paste0("奖金部分 (税率：", BONUS_RATE * 100, "%) "))
   tax_cumsum <- cumsum(tax) 
   tax_txt <- c()
   for(i in tax) {
@@ -98,7 +98,7 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
   tax_txt <- append(tax_txt, paste0("￥", bonus_tax))
   tax_cumsum_bonus <- append(tax_cumsum, bonus_tax)
   df_tax <- data.frame(tax_class, tax_cumsum_bonus, tax_txt)
-  df_tax[["tax_range"]] <- factor(tax_range, levels = rev(tax_range))
+  df_tax[["tax_range"]] <- factor(tax_range, levels = tax_range)
   
   tax_sum <- c(paste0("奖金税额：￥", bonus_tax), paste0("梯度税额：￥", sum(tax)))
   
@@ -120,7 +120,7 @@ tax_plt <- function(df_tax, tax_sum) {
           legend.position = "top") +
     ylab("扣税额") +
     annotate("text",x=1:2,y=Inf,vjust=1.5,label=tax_sum) +
-    labs(fill="扣税占比")
+    labs(fill="扣税占比：")
   return(plt)
 }
 
