@@ -1,4 +1,5 @@
 
+
 # server logic
 server <- function(input, output, session) {
   
@@ -45,5 +46,4 @@ server <- function(input, output, session) {
     output$tax_details2 <- renderText({""})
     output$tax_plot <- renderPlot({})
   })
-  
 }

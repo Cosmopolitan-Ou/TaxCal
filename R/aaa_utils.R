@@ -63,7 +63,7 @@ cal2 <- function(income, bonus, benefit, deduct, method) {
     tax <- c()
     for (i in seq_along(resid)) {
       tax <- append(tax, ifelse(resid[i] > 0, (TAX_RANGE[i] -  ifelse(i==1, 0, TAX_RANGE[i-1])) * (TAX_RATE[i]), 0))
-      if (resid[i] < 0) break
+      if (resid[i] <= 0) break
     }
     tax <- append(tax[1:length(tax)-1], (pre_amout - ifelse(i == 1, 0, TAX_RANGE[i - 1])) * TAX_RATE[i])
   }
